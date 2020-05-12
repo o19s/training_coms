@@ -1,27 +1,34 @@
-## Certificates, Surveys and Emails oh my
+## Training Communications
 
-All OSC trainings involve personalized communication, whether that's the welcome email or course certificate. This repo is a collection of R scripts to help automate some of that.
+All OSC trainings involve personalized communication, whether that's the welcome email or course certificate. This repo is a collection of R scripts to help automate some of that. It resolves around a `roster.csv` file that has names and emails of attendees.
 
-This repo is a work in progress.
+This repo is a workflow in progress.
+
+1. Get class roster from EventBee/G-Drive
+2. Send welcome email with `emails.R`
+3. Use Badgr to issue certificates by CSV
+4. Generate certificates with `certificates.R`
+5. Send follow-up email and attach certificate with `emails.R`
 
 ### Emails
 
-Handled in the `emails.R` script. 
+Send a personalized template ("Welcome" or "Follow-up") to all atendees. These can include personalized text and attachments. You can also create emails as drafts in your Gmail account instead, if you want to check that everything looks good before you press go/send.
 
 Requires:
 
-* Hand formating the email body using HTML (links) in the script
+* Hand formating the email body using HTML
 * Class roster with email address
-* Ability to authenticate your OSC Gmail account via browser
+* Ability to authenticate your OSC Gmail account via browser (so no remote machines)
 
 ### Certificates
 
-Generate a batch of certificates as PDF files outputted to `certs_new/`
+Generate a batch of certificates as PDF files outputted to `certs_new/`. This personalizes a certificate `template.pptx` with the R library `officr` before calling LibreOffice's `soffice` command line tool to convert `PPTX` to `PDF`.
 
 Requires: 
 
-* Certificate template in PowerPoint: template.ppt
+* Certificate template in PowerPoint: `template.ppt`
 * Hand editting the template to show the proper class and completion date
+* Manually perform a bulk upload on Badgr for certificates, then retrieve assertion urls for each learner in `roster.csv`
 * Class roster with a united Name (First & Last), BadgeID URL, field: croster.csv
 
 Getting R to properly edit the PowerPoint is finicky, so change things carefully.

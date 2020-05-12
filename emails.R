@@ -1,14 +1,21 @@
 library(gmailr)
 library(tidyverse)
 
-gm_auth_configure()
-gm_auth()
-
-roster <- read_csv("certs/roster.csv") %>% 
+roster <- read_csv("roster.csv") %>% 
   mutate(First = gsub(" .*", "", Name),
          BadgeId = gsub("\\?.*", "", BadgeId))
 
-after_body <- glue::glue(
+# Body templates ----------------------------------------------------------
+# this allows customization based on the other column values in roster.csv
+welcome_body <- glue::glue(
+ "Hi {roster$First},
+ <br>
+ <br>
+ TDB
+ " 
+)
+
+follow_up_body <- glue::glue(
   "Hi {roster$First},
   <br>
   <br>
@@ -28,26 +35,37 @@ after_body <- glue::glue(
   Dan, Max and Nate"
 )
 
-roster$body = after_body
+gm_auth_configure()
+gm_auth()
 
+roster$body = follow_up_body # choose which one to use
+
+#' Create Gmail to save as draft or send
+#' 
+#' @param roster `character` valid path to CSV
+#' @param drafte `logical` Should emails be saved as a draft (TRUE) or sent
+#' directly (FALSE)
 make_email <- function(roster, draft = TRUE) {
-  
-  print(roster)
   
   mime <- gm_mime() %>%
     gm_to(roster$Email) %>%
+    # the account you authenticated earlier
     gm_from("nday@o19s.com") %>%
+    # adjust the subject line as needed
     gm_subject("TLRE follow up") %>%
+    
     gm_html_body(roster$body) %>% 
-    gm_attach_file(roster$cert_path)
+    # attach files as needed
+    gm_attach_file(roster$cert_path) 
   
-    if (draft) {
+    if (draft) { # create a draft
       gm_create_draft(mime)
-    } else {
+    } else { # or send direct
       gm_send_message(mime)
     }
 }
 
 sent <- roster %>% split(1:nrow(.)) %>% map(make_email, FALSE)
-# sometimes this hangs, so restart the R-session --> Re-auth --> Pray
+# sometimes this hangs, but running on a fresh restart seems to resolve
+# so restart the R-session --> Re-auth --> Pray
 
