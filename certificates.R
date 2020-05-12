@@ -1,5 +1,3 @@
-# library(htmltools)
-# library(xml2)
 library(officer)
 library(tidyverse)
 
@@ -71,7 +69,7 @@ for(i in seq_along(roster$Name)) {
   print(out, glue::glue("{output_dir}{gsub(' ', '_', rn)}.pptx"))
 }
 
-office_shot <- function(file, out_dir){
+convert_to_pdf <- function(file, out_dir){
   glue::glue(
     "/Applications/LibreOffice.app/Contents/MacOS/soffice --headless --convert-to pdf --outdir {out_dir} {file}",
   ) %>% 
@@ -79,8 +77,9 @@ office_shot <- function(file, out_dir){
 }
 
 dir("certs_new/", full.names = TRUE) %>% 
-  walk(~ office_shot(., "certs_new/"))
+  walk(~ convert_to_pdf(., "certs_new/"))
 # takes a second, should send message 'impress_pdf_Export' in Console
 
 roster$cert_path <- glue::glue("{output_dir}{gsub(' ', '_', roster$Name)}.pdf")
-write_csv(roster, "certs/roster.csv")
+write_csv(roster, "roster.csv") # for use in emails.R
+
