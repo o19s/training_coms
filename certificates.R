@@ -16,12 +16,13 @@ ppt <- read_pptx(template_path)
 ph_with2 <- function (x, value, location, ...) {
   slide <- x$slide$get_slide(x$cursor)
   location <- fortify_location2(location, doc = x)
-  new_ph <- officer:::gen_ph_str(left = location$left, top = location$top,
+  new_ph <- officer:::sh_props_pml(left = location$left, top = location$top,
                        width = location$width, height = location$height, label = location$ph_label,
                        ph = location$ph, rot = location$rotation, bg = location$bg)
   pars <- paste0("<a:p><a:r><a:rPr/><a:t>", htmltools::htmlEscape(value),
                  "</a:t></a:r></a:p>", collapse = "")
-  xml_elt <- paste0(officer:::pml_with_ns("p:sp"), new_ph, "<p:txBody><a:bodyPr/><a:lstStyle/>",
+  xml_elt <- paste0(officer:::psp_ns_yes, new_ph,
+                    "<p:txBody><a:bodyPr/><a:lstStyle/>",
                     pars, "</p:txBody></p:sp>")
   node <- xml2::as_xml_document(xml_elt)
   xml2::xml_add_child(xml2::xml_find_first(slide$get(), "//p:spTree"),
