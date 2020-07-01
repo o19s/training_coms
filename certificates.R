@@ -6,7 +6,7 @@ template_path <- "template.pptx"
 output_dir <- "certs_new/"
 
 roster <- read_csv(roster_path) %>% 
-  mutate(BadgeId = gsub("\\?.*", "", BadgeId))
+  mutate(badge_id = gsub("\\?.*", "", BadgeId))
 
 ppt <- read_pptx(template_path)
 
@@ -63,7 +63,7 @@ fortify_location2 <- function(id, doc, ...) {
 
 for(i in seq_along(roster$Name)) {
   rn = roster$Name[i]
-  re = roster$BadgeId[i]
+  re = roster$badger_id[i]
   x <- read_pptx(template_path)
   out <- ph_with2(x, rn, 14)
   out <- ph_with2(x, re, 17)
@@ -71,6 +71,7 @@ for(i in seq_along(roster$Name)) {
 }
 
 convert_to_pdf <- function(file, out_dir){
+  # works with LibreOffice v6.3.6
   glue::glue(
     "/Applications/LibreOffice.app/Contents/MacOS/soffice --headless --convert-to pdf --outdir {out_dir} {file}",
   ) %>% 

@@ -6,7 +6,7 @@ This repo is a workflow in progress.
 
 1. Get class roster from EventBee/G-Drive
 2. Send welcome email with `emails.R`
-3. Use Badgr to issue certificates by CSV
+3. Use `badgr.R` to issue certificates
 4. Generate certificates with `certificates.R`
 5. Send follow-up email and attach certificate with `emails.R`
 
@@ -19,6 +19,10 @@ Requires:
 * Hand formating the email body using HTML
 * Class roster with email address
 * Ability to authenticate your OSC Gmail account via browser (so no remote machines)
+
+### Badges
+
+Use `bargr.R` to interact with the Badgr API and generate new certificates based on the roster after class. The code records the certifcate ID so it can be incorportate in the certificate PDFs
 
 ### Certificates
 

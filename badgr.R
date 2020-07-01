@@ -39,7 +39,7 @@ classes <- available_classes()
 #' @value `character` URL for proof of certificate
 award_badge <- function(email, class) {
   
-  # contruct body
+  # construct body
   body_li <- list("recipient" =
                     list("identity" = email,
                          "type" = "email")) %>% 
@@ -58,9 +58,21 @@ award_badge <- function(email, class) {
   
 }
 
-award_badge("nathancday@gmail.com", classes[2])
-# save this returned value back into roseter for use in `certificates.R`
+#award_badge("nathancday@gmail.com", classes[2])
+# save this returned value back into roster for use in `certificates.R`
 
+
+# Award and record --------------------------------------------------------
+# This is where the magic happens
+
+class_of_interest <- classes[2]
+
+roster <- read_csv("roster.csv")
+roster %<>% 
+  rowwise() %>% 
+  mutate(badger_id = unname(award_badge(Email, class_of_interest)))
+
+write_csv(roster, "roster.csv")
 
 
 # API sandbox -------------------------------------------------------------
