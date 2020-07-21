@@ -2,11 +2,14 @@ library(gmailr)
 library(googlesheets4)
 library(tidyverse)
 
+source("params.R")
+
 gm_auth_configure()
-gm_auth() # require console interaction
+gm_auth(user) # require console interaction
 
 # roster <- read_csv("roster.csv")
-roster <- read_sheet("https://docs.google.com/spreadsheets/d/1-JVYjjSVnQsJ4C_LfEH1wx6tWvxlai-84WQMGvxFm48/edit#gid=0")
+
+roster <- read_sheet(sheet_url)
 
 trainers_signature <- "Max and Nate"
 
@@ -32,7 +35,7 @@ welcome_body <- glue::glue(
 welcome_book_body <- glue::glue(
   "Hi {roster$first}
   <br><br>
-  We are looking forward to having your join us for Think Like A Relevance Engineer (Elasticsearch) next week.
+  We are looking forward to having you join us for Think Like A Relevance Engineer (Solr) next week.
   <br><br>
   Because this class is tightly coupled to the book <a href='https://www.manning.com/books/relevant-search'>Relevant Search</a> we've worked with Manning to create promo codes, that include a free personal copy and shipping.
   <br><br>
@@ -40,14 +43,18 @@ welcome_book_body <- glue::glue(
   <br><br>
   In the past we've had issues where the checkout will attempt to charge shipping, please reach out to us if that happens, it's a bug.
   <br><br>
-  To make the class interactive, we have an sandbox setup <a href='https://github.com/o19s/es-tmdb'>here.</a>
-  Please follow the instructions in that repo to get set-up before class starts on Tuesday.
+  To make the class interactive, we have a sandbox setup <a href='https://github.com/o19s/solr-tmdb'>here.</a>
+  Please follow the instructions in that repo to get set-up before class starts.
   <br><br>
-  If you hit any snags or just want to say hello, join us in office hours on Friday (10th) or Monday (13th) 1-2p EDT.
+  If you hit any snags or just want to say hello, join us in office hours on Monday (20th) 3:30p EDT.
   <br>
-  ZoomID: 85208661829
+  ZoomID: 85427913047 (office hours only)
   <br><br>
-  We will also bet setting up a private Slack channel for coms during class. G-Cal and Slack invites will follow shortly.
+  We will use another meeting for the class training on Tuesday (21st) - Friday (24th) 9a-1p EDT.
+  <br>
+  ZoomID: 88082106688 (all four days)
+  <br><br>
+  We will also be setting up a private Slack channel for coms during class. G-Cal and Slack invites will follow shortly.
   <br><br>
   Reach out with any questions,
   <br>
@@ -57,19 +64,19 @@ welcome_book_body <- glue::glue(
 
 
 follow_up_body <- glue::glue(
-  "Hi {roster$First},
+  "Hi {roster$first},
   <br>
   <br>
   Thanks so much for coming to the training last week.  It was great learning with you.
   <br>
   <br>
-  Attached is your certificate!  We use badgr.io to manage these, there is a link to the digital award on the certificante.  If you'd like to share it on LinkedIn, see the <a href='https://docs.google.com/document/d/1edUjY0kmVpD2J6cDYQIYPXBnwK-pnQ2I0Rb0chqj3hM/edit#heading=h.ny6kcqir2tgd'>instructions</a> here.
+  Attached is your certificate for completing the class! We use badgr.io to manage these, there is a link to the digital award on the certificate.  If you'd like to share it on LinkedIn, see the <a href='https://docs.google.com/document/d/1edUjY0kmVpD2J6cDYQIYPXBnwK-pnQ2I0Rb0chqj3hM/edit#heading=h.ny6kcqir2tgd'>instructions</a> here.
   <br>
   <br>
-  Also as you know we are just getting started with our remote training. If you'd be comfortable sharing a quote/testimonial about your experience we'd appreciate it! There is also an anonymous <a href = 'https://docs.google.com/forms/d/e/1FAIpQLScflsdF-0zC03Q9u2684P0cOWdvdZaRxqF03QRavoY9oij4eg/viewform'>survey</a> if you'd like to share your feedback that way.
+  If you're comfortable sharing a quote/testimonial about your training experience, we'd really appreciate it! There is also an anonymous <a href = 'https://docs.google.com/forms/d/e/1FAIpQLScflsdF-0zC03Q9u2684P0cOWdvdZaRxqF03QRavoY9oij4eg/viewform'>survey</a> if you'd like to share any feedback that way.
   <br>
   <br>
-  Please give me a shout if you have any questions.  Hope to see you on https://relevancy.slack.com or perhaps at another training session or conference.
+  Please give us a shout if you have any questions.  Hope to see you on <a href='https://relevancy.slack.com'>Relevancy Slack</a> or maybe at another training or search conference.
   <br>
   <br>
   Stay relevant,
@@ -77,8 +84,10 @@ follow_up_body <- glue::glue(
   {trainers_signature}"
 )
 
-roster$body = welcome_book_body # choose which one to use
+roster$body = follow_up_body # choose which one to use
 
+
+email_subject = "TLRE (Elasticsearch) training certificate!"
 #' Create Gmail to save as draft or send
 #' 
 #' @param roster `character` valid path to CSV
@@ -92,7 +101,7 @@ make_email <- function(roster, draft = TRUE, cert = FALSE) {
     # the account you authenticated earlier
     gm_from("nday@o19s.com") %>%
     # adjust the subject line as needed
-    gm_subject("TLRE (Elasticsearch) training next week") %>%
+    gm_subject(email_subject) %>%
     gm_html_body(roster$body)
   
   if (cert){
@@ -108,7 +117,7 @@ make_email <- function(roster, draft = TRUE, cert = FALSE) {
 
 sent <- roster %>%
   split(1:nrow(.)) %>%
-  map(~ make_email(., FALSE))
+  map(~ make_email(., FALSE, TRUE))
 # sometimes this hangs, but running on a fresh restart seems to resolve
 # so restart the R-session --> Re-auth --> Pray
 

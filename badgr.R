@@ -1,9 +1,14 @@
+library(googlesheets4)
 library(magrittr)
 library(httr)
 library(tidyverse)
 
-password <- Sys.getenv("BADGER_PW")
+source("params.R")
 
+#' Authenticate yourself to the Badgr API
+#' 
+#' @param user Email address of associated account
+#' @param password Password for associate account
 badgr_auth <- function(user, password) {
   POST(
     "https://api.badgr.io/o/token",
@@ -13,7 +18,7 @@ badgr_auth <- function(user, password) {
   )
 }
 
-resp <- badgr_auth("nday@opensourceconnections.com", password)
+resp <- badgr_auth(user, password)
 token <- content(resp)$access_token
 
 #' Return a named list of entityIds to be used in other API calls
@@ -31,6 +36,7 @@ available_classes <- function() {
 }
 
 classes <- available_classes()
+classes
 
 #' Award an individual badge based on email address
 #' 
@@ -66,32 +72,39 @@ award_badge <- function(email, class) {
 # This is where the magic happens
 
 class_of_interest <- classes[2]
+class_of_interest
 
-roster <- read_csv("roster.csv")
+# roster <- read_csv("roster.csv")
+
+sheet_url <- "https://docs.google.com/spreadsheets/d/1-JVYjjSVnQsJ4C_LfEH1wx6tWvxlai-84WQMGvxFm48/edit#gid=0"
+
+roster <- read_sheet(sheet_url)
+roster
+
 roster %<>% 
   rowwise() %>% 
-  mutate(badger_id = unname(award_badge(Email, class_of_interest)))
+  mutate(badger_id = unname(award_badge(email, class_of_interest)))
 
-write_csv(roster, "roster.csv")
-
+# write_csv(roster, "roster.csv")
+write_sheet(roster, sheet_url, 1)
 
 # API sandbox -------------------------------------------------------------
 
-GET(
-  'https://api.badgr.io/v2/users/self',
-  add_headers(Authorization = paste("Bearer", token))
-)
-
-# get a list of Badge entity_id
-GET(
-  'https://api.badgr.io/v2/badgeclasses',
-  add_headers(Authorization = paste("Bearer", token))
-) %>% 
-  content()
-
-# TLRE-ES
-GET(
-  'https://api.badgr.io/v2/badgeclasses/y9tZlxwnTimdkQ_oI2DpKw/assertions',
-  add_headers(Authorization = paste("Bearer", token))
-) %>% 
-  content()
+# GET(
+#   'https://api.badgr.io/v2/users/self',
+#   add_headers(Authorization = paste("Bearer", token))
+# )
+# 
+# # get a list of Badge entity_id
+# GET(
+#   'https://api.badgr.io/v2/badgeclasses',
+#   add_headers(Authorization = paste("Bearer", token))
+# ) %>% 
+#   content()
+# 
+# # TLRE-ES
+# GET(
+#   'https://api.badgr.io/v2/badgeclasses/y9tZlxwnTimdkQ_oI2DpKw/assertions',
+#   add_headers(Authorization = paste("Bearer", token))
+# ) %>% 
+#   content()

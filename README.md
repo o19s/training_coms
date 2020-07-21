@@ -17,12 +17,12 @@ Send a personalized template ("Welcome" or "Follow-up") to all atendees. These c
 Requires:
 
 * Hand formating the email body using HTML
-* Class roster with email address
+* Class roster with columns `email`, `first` and `book_code`(TLRE only)
 * Ability to authenticate your OSC Gmail account via browser (so no remote machines)
 
 ### Badges
 
-Use `bargr.R` to interact with the Badgr API and generate new certificates based on the roster after class. The code records the certifcate ID so it can be incorportate in the certificate PDFs
+Use `badrgr.R` to interact with the Badgr API and generate new certificates based on the `roster`. The Badgr response includes the certifcate ID/link that is saved back into the `roster` for certificate generation.
 
 ### Certificates
 
@@ -33,7 +33,6 @@ Requires:
 * Certificate template in PowerPoint: `template.ppt`
 * Hand editting the template to show the proper class and completion date
 * Manually perform a bulk upload on Badgr for certificates, then retrieve assertion urls for each learner in `roster.csv`
-* Class roster with a united Name (First & Last), BadgeID URL, field: croster.csv
+* Class roster with a field `full_name` (First & Last), BadgeID URL, field: croster.csv
 
 Getting R to properly edit the PowerPoint is finicky, so change things carefully.
-

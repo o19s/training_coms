@@ -1,13 +1,18 @@
+library(googlesheets4)
 library(officer)
+library(magrittr)
 library(tidyverse)
 
-roster_path <- "roster.csv"
+source("params.R")
+
+roster <- read_sheet(sheet_url)
+
+# maybe need some touch ups
+# roster$badger_id %>% gsub("\\?.*", "", .)
+roster %<>% mutate(name = paste(first, last))
+
 template_path <- "template.pptx"
-output_dir <- "certs_new/"
-
-roster <- read_csv(roster_path) %>% 
-  mutate(badge_id = gsub("\\?.*", "", BadgeId))
-
+# change date & class_name in template
 ppt <- read_pptx(template_path)
 
 # layout_properties(ppt)
@@ -61,8 +66,10 @@ fortify_location2 <- function(id, doc, ...) {
 
 # ppt2 <- ph_with2(ppt, "Nate", 14)
 
-for(i in seq_along(roster$Name)) {
-  rn = roster$Name[i]
+output_dir <- "certs_new/"
+
+for(i in seq_along(roster$name)) {
+  rn = roster$name[i]
   re = roster$badger_id[i]
   x <- read_pptx(template_path)
   out <- ph_with2(x, rn, 14)
@@ -72,16 +79,22 @@ for(i in seq_along(roster$Name)) {
 
 convert_to_pdf <- function(file, out_dir){
   # works with LibreOffice v6.3.6
+  # https://www.libreoffice.org/download/download/
   glue::glue(
     "/Applications/LibreOffice.app/Contents/MacOS/soffice --headless --convert-to pdf --outdir {out_dir} {file}",
   ) %>% 
   system()
 }
 
-dir("certs_new/", full.names = TRUE) %>% 
+dir(output_dir, full.names = TRUE) %>% 
   walk(~ convert_to_pdf(., "certs_new/"))
 # takes a second, should send message 'impress_pdf_Export' in Console
 
-roster$cert_path <- glue::glue("{output_dir}{gsub(' ', '_', roster$Name)}.pdf")
-write_csv(roster, "roster.csv") # for use in emails.R
+# remove pptx if the pdfs look gud
+dir(output_dir, "pptx", full.names = TRUE) %>% file.remove()
+
+roster$cert_path <- glue::glue("{output_dir}{gsub(' ', '_', roster$name)}.pdf")
+
+# write_csv(roster, "roster.csv") # for use in emails.R
+write_sheet(roster, sheet_url, 1)
 
