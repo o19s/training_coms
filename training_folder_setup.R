@@ -10,12 +10,7 @@ main_ls <- drive_ls(as_id(main_id))
 
 # Create a new class inside "Previous Classes" directory
 prev_classes_dir <- as_id("1bbHpIBlaOZ1JAyBPv3geuyfC0rh9eYIu")
-
 resp <- drive_mkdir("TLRE_Solr_2020_07_22", prev_classes_dir)
-
-# capture destination folder's ID
-# prev_class_ls <- drive_ls(prev_class_id)
-# target_id <- unlist(prev_class_ls[1,2]) # try and get this from drive_mkdir() next time
 
 target_id <- resp$id
 drive_ls(as_id(target_id)) # visually confirming
@@ -32,18 +27,17 @@ make_ls <- . %>%
   select(-drive_resource) %>% 
   deframe()
 
-d1 <- main_ls[1,2] %>% make_ls()
-
-map2(d1, names(d1),
-     ~ drive_cp(as_id(.x), as_id(x[[1]][["id"]]), .y))
-
-the_copier <- function(id, name, target_id) {
-  map2(id, name,
+# iterate over named array to upload individual files
+copy_that <- function(id, target_id) {
+  map2(id, names(id),
        ~ drive_cp(as_id(.x), as_id(target_id), .y))
 }
 
+d1 <- main_ls[1,2] %>% make_ls()
+the_copier(d1, day_dirs[[1]][["id"]])
+
 d2 <- main_ls[4,2] %>% make_ls()
-the_copier(d2, names(d2), day_dirs[[2]][["id"]])
+copy_that(d2, day_dirs[[2]][["id"]])
 
 # Day 3 and 4 are messier b/c ES and Solr
 messy_ls <- function(x, engine = "Elasticsearch") {
@@ -52,11 +46,11 @@ messy_ls <- function(x, engine = "Elasticsearch") {
     drive_ls() %>% 
     filter(name == engine) %>% 
     pull(id) %>% 
-    ls_maker()
+    make_ls()
 }
 
 d3 <- main_ls[3,2] %>% messy_ls("Solr")
-the_copier(d3, names(d3), day_dirs[[3]][["id"]])
+copy_that(d3, day_dirs[[3]][["id"]])
 
 d4 <- main_ls[2,2] %>% messy_ls("Solr")
-the_copier(d4, names(d4), day_dirs[[4]][["id"]])
+copy_that(d4, day_dirs[[4]][["id"]])
