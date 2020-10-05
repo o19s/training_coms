@@ -8,7 +8,6 @@ source("params.R")
 roster <- read_sheet(sheet_url)
 
 # maybe need some touch ups
-# roster$badger_id %>% gsub("\\?.*", "", .)
 roster %<>% mutate(name = paste(first, last))
 
 template_path <- "template.pptx"

@@ -52,7 +52,7 @@ award_badge <- function(email, class) {
     jsonlite::toJSON(auto_unbox = TRUE) # prevents making everything an array, which would cause API error
   
   POST(
-    'https://api.badgr.io/v2/badgeclasses/y9tZlxwnTimdkQ_oI2DpKw/assertions',
+    glue::glue('https://api.badgr.io/v2/badgeclasses/{class}/assertions'),
     body = body_li,
     content_type_json(),
     add_headers(Authorization = paste("Bearer", token))
@@ -71,12 +71,8 @@ award_badge <- function(email, class) {
 # Award and record --------------------------------------------------------
 # This is where the magic happens
 
-class_of_interest <- classes[2]
+class_of_interest <- classes[3]
 class_of_interest
-
-# roster <- read_csv("roster.csv")
-
-sheet_url <- "https://docs.google.com/spreadsheets/d/1-JVYjjSVnQsJ4C_LfEH1wx6tWvxlai-84WQMGvxFm48/edit#gid=0"
 
 roster <- read_sheet(sheet_url)
 roster

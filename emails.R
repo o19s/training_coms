@@ -7,11 +7,9 @@ source("params.R")
 gm_auth_configure()
 gm_auth(user) # require console interaction
 
-# roster <- read_csv("roster.csv")
-
 roster <- read_sheet(sheet_url)
 
-trainers_signature <- "Max and Nate"
+trainers_signature <- "Eric and Nate"
 
 # Body templates ----------------------------------------------------------
 # this allows customization based on the other column values in roster.csv
@@ -33,7 +31,7 @@ welcome_body <- glue::glue(
 )
 
 welcome_book_body <- glue::glue(
-  "Hi {roster$first}
+  "Hi {roster$first},
   <br><br>
   We are looking forward to having you join us for Think Like A Relevance Engineer (Solr) next week.
   <br><br>
@@ -43,16 +41,16 @@ welcome_book_body <- glue::glue(
   <br><br>
   In the past we've had issues where the checkout will attempt to charge shipping, please reach out to us if that happens, it's a bug.
   <br><br>
-  To make the class interactive, we have a sandbox setup <a href='https://github.com/o19s/solr-tmdb'>here.</a>
+  To make the class interactive, we have a sandbox setup <a href='https://github.com/o19s/solr-tmdb'>here</a>.
   Please follow the instructions in that repo to get set-up before class starts.
   <br><br>
-  If you hit any snags or just want to say hello, join us in office hours on Monday (20th) 3:30p EDT.
+  If you hit any snags or just want to say hello, join us in office hours on Monday 4-5p EDT.
   <br>
-  ZoomID: 85427913047 (office hours only)
+  ZoomID: 81262398501 (office hours only)
   <br><br>
-  We will use another meeting for the class training on Tuesday (21st) - Friday (24th) 9a-1p EDT.
+  We will use another meeting for the class training on Tuesday - Friday 9a-1p EDT.
   <br>
-  ZoomID: 88082106688 (all four days)
+  ZoomID: 86894727154 (all four days)
   <br><br>
   We will also be setting up a private Slack channel for coms during class. G-Cal and Slack invites will follow shortly.
   <br><br>
@@ -67,7 +65,7 @@ follow_up_body <- glue::glue(
   "Hi {roster$first},
   <br>
   <br>
-  Thanks so much for coming to the training last week.  It was great learning with you.
+  Thanks so much for coming to TLRE training last week, it was great learning with you.
   <br>
   <br>
   Attached is your certificate for completing the class! We use badgr.io to manage these, there is a link to the digital award on the certificate.  If you'd like to share it on LinkedIn, see the <a href='https://docs.google.com/document/d/1edUjY0kmVpD2J6cDYQIYPXBnwK-pnQ2I0Rb0chqj3hM/edit#heading=h.ny6kcqir2tgd'>instructions</a> here.
@@ -84,10 +82,10 @@ follow_up_body <- glue::glue(
   {trainers_signature}"
 )
 
-roster$body = follow_up_body # choose which one to use
+roster$body <- welcome_book_body # choose which one to use
 
+email_subject = "Solr TLRE training next week"
 
-email_subject = "TLRE (Elasticsearch) training certificate!"
 #' Create Gmail to save as draft or send
 #' 
 #' @param roster `character` valid path to CSV
@@ -117,7 +115,7 @@ make_email <- function(roster, draft = TRUE, cert = FALSE) {
 
 sent <- roster %>%
   split(1:nrow(.)) %>%
-  map(~ make_email(., FALSE, TRUE))
+  map(~ make_email(., F))
 # sometimes this hangs, but running on a fresh restart seems to resolve
 # so restart the R-session --> Re-auth --> Pray
 
