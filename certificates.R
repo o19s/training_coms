@@ -76,7 +76,7 @@ for(i in seq_along(roster$name)) {
   print(out, glue::glue("{output_dir}{gsub(' ', '_', rn)}.pptx"))
 }
 
-convert_to_pdf <- function(file, out_dir){
+convert_to_pdf <- function(file, out_dir) {
   # works with LibreOffice v6.3.6
   # https://www.libreoffice.org/download/download/
   glue::glue(

@@ -79,12 +79,16 @@ follow_up_body <- glue::glue(
   <br>
   Stay relevant,
   <br>
-  {trainers_signature}"
+  {trainers_signature}
+  <br>
+  <br>
+  P.S. If you are interested in Learning to Rank a.k.a. machine learning for relevance we are doing a training next week (October 20-23) and you can get 25% off with the discount code 'didtlre'.
+  "
 )
 
-roster$body <- welcome_book_body # choose which one to use
+roster$body <- follow_up_body # choose which one to use
 
-email_subject = "Solr TLRE training next week"
+email_subject = "Solr TLRE last week"
 
 #' Create Gmail to save as draft or send
 #' 
@@ -115,7 +119,7 @@ make_email <- function(roster, draft = TRUE, cert = FALSE) {
 
 sent <- roster %>%
   split(1:nrow(.)) %>%
-  map(~ make_email(., F))
+  map(~ make_email(., F, T))
 # sometimes this hangs, but running on a fresh restart seems to resolve
 # so restart the R-session --> Re-auth --> Pray
 

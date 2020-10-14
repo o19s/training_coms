@@ -10,7 +10,7 @@ source("params.R")
 #' @param user Email address of associated account
 #' @param password Password for associate account
 badgr_auth <- function(user, password) {
-  POST(
+  httr::POST(
     "https://api.badgr.io/o/token",
     body = list("username" = user,
                 "password" = password),
