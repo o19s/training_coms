@@ -64,14 +64,14 @@ award_badge <- function(email, class) {
   
 }
 
-#award_badge("nathancday@gmail.com", classes[2])
+# award_badge("nathancday@gmail.com", classes[2]) 
 # save this returned value back into roster for use in `certificates.R`
 
 
 # Award and record --------------------------------------------------------
 # This is where the magic happens
 
-class_of_interest <- classes[3]
+class_of_interest <- classes[4]
 class_of_interest
 
 roster <- read_sheet(sheet_url)
@@ -84,23 +84,3 @@ roster %<>%
 # write_csv(roster, "roster.csv")
 write_sheet(roster, sheet_url, 1)
 
-# API sandbox -------------------------------------------------------------
-
-# GET(
-#   'https://api.badgr.io/v2/users/self',
-#   add_headers(Authorization = paste("Bearer", token))
-# )
-# 
-# # get a list of Badge entity_id
-# GET(
-#   'https://api.badgr.io/v2/badgeclasses',
-#   add_headers(Authorization = paste("Bearer", token))
-# ) %>% 
-#   content()
-# 
-# # TLRE-ES
-# GET(
-#   'https://api.badgr.io/v2/badgeclasses/y9tZlxwnTimdkQ_oI2DpKw/assertions',
-#   add_headers(Authorization = paste("Bearer", token))
-# ) %>% 
-#   content()

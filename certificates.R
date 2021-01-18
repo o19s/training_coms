@@ -10,9 +10,8 @@ roster <- read_sheet(sheet_url)
 # maybe need some touch ups
 roster %<>% mutate(name = paste(first, last))
 
-template_path <- "template.pptx"
-# change date & class_name in template
-ppt <- read_pptx(template_path)
+# !!! - change date & class_name in template
+# ppt <- read_pptx(template_path)
 
 # layout_properties(ppt)
 
@@ -47,7 +46,6 @@ fortify_location2 <- function(id, doc, ...) {
   # props <- props[props$ph_label %in% x, , drop = FALSE]
   props <- props[props$id == id, , drop = FALSE]
   
-  
   if( nrow(props) < 1) {
     stop("no selected row")
   }
@@ -63,26 +61,25 @@ fortify_location2 <- function(id, doc, ...) {
   out
 }
 
-# ppt2 <- ph_with2(ppt, "Nate", 14)
-
-output_dir <- "certs_new/"
-
-for(i in seq_along(roster$name)) {
-  rn = roster$name[i]
-  re = roster$badger_id[i]
-  x <- read_pptx(template_path)
-  out <- ph_with2(x, rn, 14)
-  out <- ph_with2(x, re, 17)
-  print(out, glue::glue("{output_dir}{gsub(' ', '_', rn)}.pptx"))
-}
-
 convert_to_pdf <- function(file, out_dir) {
   # works with LibreOffice v6.3.6
   # https://www.libreoffice.org/download/download/
   glue::glue(
     "/Applications/LibreOffice.app/Contents/MacOS/soffice --headless --convert-to pdf --outdir {out_dir} {file}",
   ) %>% 
-  system()
+    system()
+}
+
+# Create ------------------------------------------------------------------
+
+
+for(i in seq_along(roster$name)) {
+  rn = roster$name[i]
+  re = roster$badger_id[i]
+  x <- read_pptx(template_path)
+  out <- ph_with2(x, rn, 14)
+  out <- ph_with2(out, re, 17)
+  print(out, glue::glue("{output_dir}{gsub(' ', '_', rn)}.pptx"))
 }
 
 dir(output_dir, full.names = TRUE) %>% 

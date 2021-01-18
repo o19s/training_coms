@@ -8,32 +8,31 @@ gm_auth_configure()
 gm_auth(user) # require console interaction
 
 roster <- read_sheet(sheet_url)
+# ^^^^ Run interactive for auth porpoises ^^^^ -----------------------------------------------
 
-trainers_signature <- "Eric and Nate"
 
 # Body templates ----------------------------------------------------------
 # this allows customization based on the other column values in roster.csv
-welcome_body <- glue::glue(
+welcome_ltr <- glue::glue(
   "Hi {roster$first},
   <br><br>
-  Doug and I are looking forward to learning about Learning to Rank with you next week as part of Tech Fredrick's training.
+  Max and I are looking forward to learning about Learning to Rank with you tomorrow.
   <br><br>
-  To make the class interactive, we've built out a repo with lab exercises as Jupyter notebooks <a href='https://github.com/o19s/hello-ltr'>here.</a>
-  Please follow the instructions there to get set-up before class starts on Monday. If you hit any snags or just want to say hello, please come to office hours on Friday (10th) or Monday (13th) 1-2p EDT, ZoomID: 85208661829.
-  We will also set up a private Slack channel for coms during class.
-  <br><br>
-  You should recieve G-Cal and Slack invites shortly, reach out if you don't.
+  To make the class interactive, we've built a repo with lab exercises as Jupyter notebooks <a href='https://github.com/o19s/hello-ltr'>here.</a>
+  We know folks learn better when they can run and tinker with the examples.
+  Please come to class on Thursday with your lab environment ready to roll.
+  You should have recieved G-Cal and Slack invites. Reach out here or on Slack if you hit any issues.
   <br><br>
   See you very soon,
   <br>
-  {trainers_signature}
+  {email_signature}
   "
 )
 
 welcome_book_body <- glue::glue(
   "Hi {roster$first},
   <br><br>
-  We are looking forward to having you join us for Think Like A Relevance Engineer (Solr) next week.
+  We are excited to have you join us for Think Like A Relevance Engineer (Elasticsearch) next week.
   <br><br>
   Because this class is tightly coupled to the book <a href='https://www.manning.com/books/relevant-search'>Relevant Search</a> we've worked with Manning to create promo codes, that include a free personal copy and shipping.
   <br><br>
@@ -41,22 +40,22 @@ welcome_book_body <- glue::glue(
   <br><br>
   In the past we've had issues where the checkout will attempt to charge shipping, please reach out to us if that happens, it's a bug.
   <br><br>
-  To make the class interactive, we have a sandbox setup <a href='https://github.com/o19s/solr-tmdb'>here</a>.
-  Please follow the instructions in that repo to get set-up before class starts.
+  To make the class interactive, we have a sandbox setup <a href='https://github.com/o19s/es-tmdb'>here</a>.
+  Please follow the instructions in that repo to get set-up before we start class on the third day (Thursday).
   <br><br>
-  If you hit any snags or just want to say hello, join us in office hours on Monday 4-5p EDT.
+  If you have any questions we will have office half-hours after each day.
+  <br><br>
+  We will use Zoom for video conferencing.
+  <br><br>
+  Meeting ID: 872 8959 6306
   <br>
-  ZoomID: 81262398501 (office hours only)
+  Passcode: 810540
   <br><br>
-  We will use another meeting for the class training on Tuesday - Friday 9a-1p EDT.
-  <br>
-  ZoomID: 86894727154 (all four days)
-  <br><br>
-  We will also be setting up a private Slack channel for coms during class. G-Cal and Slack invites will follow shortly.
+  There will also be a private Slack channel for coms during class. G-Cal (with Zoom details) and Slack invites will follow shortly.
   <br><br>
   Reach out with any questions,
   <br>
-  {trainers_signature}
+  {email_signature}
   "
 )
 
@@ -65,7 +64,7 @@ follow_up_body <- glue::glue(
   "Hi {roster$first},
   <br>
   <br>
-  Thanks so much for coming to TLRE training last week, it was great learning with you.
+  Thanks so much for coming to LTR training two(!) weeks ago, it was great learning with you.
   <br>
   <br>
   Attached is your certificate for completing the class! We use badgr.io to manage these, there is a link to the digital award on the certificate.  If you'd like to share it on LinkedIn, see the <a href='https://docs.google.com/document/d/1edUjY0kmVpD2J6cDYQIYPXBnwK-pnQ2I0Rb0chqj3hM/edit#heading=h.ny6kcqir2tgd'>instructions</a> here.
@@ -79,16 +78,15 @@ follow_up_body <- glue::glue(
   <br>
   Stay relevant,
   <br>
-  {trainers_signature}
+  {email_signature}
   <br>
   <br>
-  P.S. If you are interested in Learning to Rank a.k.a. machine learning for relevance we are doing a training next week (October 20-23) and you can get 25% off with the discount code 'didtlre'.
+  P.S. If you are interested in NLP in search, we've just launched our Hello-NLP class. And we are doing a training next week (Nov 17-20) and you can get 25% off with the discount code 'evenearlier'.
   "
 )
 
-roster$body <- follow_up_body # choose which one to use
-
-email_subject = "Solr TLRE last week"
+# Set up ------------------------------------------------------------
+roster$body <- welcome_book_body # choose which one to use; has to be here b/c glue (or I could get tidy-eval-fancy)
 
 #' Create Gmail to save as draft or send
 #' 
@@ -101,8 +99,7 @@ make_email <- function(roster, draft = TRUE, cert = FALSE) {
   mime <- gm_mime() %>%
     gm_to(roster$email) %>%
     # the account you authenticated earlier
-    gm_from("nday@o19s.com") %>%
-    # adjust the subject line as needed
+    gm_from(user) %>%
     gm_subject(email_subject) %>%
     gm_html_body(roster$body)
   
@@ -117,9 +114,12 @@ make_email <- function(roster, draft = TRUE, cert = FALSE) {
   }
 }
 
+
+# Send it -----------------------------------------------------------------
+
 sent <- roster %>%
   split(1:nrow(.)) %>%
-  map(~ make_email(., F, T))
+  map(~ make_email(.))
 # sometimes this hangs, but running on a fresh restart seems to resolve
 # so restart the R-session --> Re-auth --> Pray
 
