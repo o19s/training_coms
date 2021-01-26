@@ -79,9 +79,28 @@ follow_up_body <- glue::glue(
   Stay relevant,
   <br>
   {email_signature}
+  "
+)
+
+follow_up_body_tlre <- glue::glue(
+  "Hi {roster$first},
   <br>
   <br>
-  P.S. If you are interested in NLP in search, we've just launched our Hello-NLP class. And we are doing a training next week (Nov 17-20) and you can get 25% off with the discount code 'evenearlier'.
+  Thanks so much for coming to TLRE training last week, it was great learning with you.
+  <br>
+  <br>
+  Attached is your certificate for completing the class! We use badgr.io to manage these, there is a link to the digital award on the certificate.  If you'd like to share it on LinkedIn, see the <a href='https://docs.google.com/document/d/1edUjY0kmVpD2J6cDYQIYPXBnwK-pnQ2I0Rb0chqj3hM/edit#heading=h.ny6kcqir2tgd'>instructions</a> here.
+  <br>
+  <br>
+  If you're comfortable sharing a quote/testimonial about your training experience, we'd really appreciate it! There is also an anonymous <a href = 'https://docs.google.com/forms/d/e/1FAIpQLScflsdF-0zC03Q9u2684P0cOWdvdZaRxqF03QRavoY9oij4eg/viewform'>survey</a> if you'd like to share any feedback that way.
+  <br>
+  <br>
+  Please give us a shout if you have any questions.  Hope to see you on <a href='https://relevancy.slack.com'>Relevancy Slack</a> or maybe at another training or search conference.
+  <br>
+  <br>
+  Stay relevant,
+  <br>
+  {email_signature}
   "
 )
 

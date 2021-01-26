@@ -64,14 +64,14 @@ award_badge <- function(email, class) {
   
 }
 
-# award_badge("nathancday@gmail.com", classes[2]) 
+# award_badge("nathancday@gmail.com", classes[2])
 # save this returned value back into roster for use in `certificates.R`
 
 
 # Award and record --------------------------------------------------------
 # This is where the magic happens
 
-class_of_interest <- classes[4]
+class_of_interest <- classes[2]
 class_of_interest
 
 roster <- read_sheet(sheet_url)

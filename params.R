@@ -8,5 +8,5 @@ template_path <- "template.pptx"
 
 # email params
 email_signature <- "Max and Nate"
-email_subject = "Think Like A Relevance Engineer class starting Tuesday (1/18) next week"
+email_subject = "Thanks for coming to training last week! Here is your certificate."
 

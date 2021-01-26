@@ -86,9 +86,6 @@ copy_that(d4, day_dirs[[4]][["id"]])
 # *Hello LTR ---------------------------------------------------------------
 
 
-
-
-
 d1 <- pull_id(main_ls, "Day 1") %>% make_ls()
 copy_that(d1, day_dirs[[1]][["id"]])
 
