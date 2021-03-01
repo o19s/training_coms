@@ -71,16 +71,16 @@ award_badge <- function(email, class) {
 # Award and record --------------------------------------------------------
 # This is where the magic happens
 
-class_of_interest <- classes[2]
+class_of_interest <- classes[3]
 class_of_interest
 
-roster <- read_sheet(sheet_url)
+gs4_auth(user)
+roster <- read_sheet(sheet_url) # interactive in console
 roster
 
 roster %<>% 
   rowwise() %>% 
   mutate(badger_id = unname(award_badge(email, class_of_interest)))
 
-# write_csv(roster, "roster.csv")
 write_sheet(roster, sheet_url, 1)
 

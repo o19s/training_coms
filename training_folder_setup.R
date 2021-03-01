@@ -10,16 +10,16 @@ drive_auth()
 tlre_main <- "1IkMsijn0jQGzJFl1qE9O1m2Wn0jYU-aZ"
 ltr_main <- "1Xk5bfDO1q-I_DBRIFR0TObF7OZNZYGRM"
 
-main_ls <- drive_ls(as_id(tlre_main)) # swap out as appropriate
+main_ls <- drive_ls(as_id(ltr_main)) # swap out as appropriate
 
 # Where the new files go
-new_dir <- "TLRE_ES_2020_01_19"
+new_dir <- "Hello_LTR_2020_02_16"
 
 # Create a new class inside "Previous Classes" directory
 tlre_prev <- "1bbHpIBlaOZ1JAyBPv3geuyfC0rh9eYIu"
 ltr_prev <- "1aHnIMPbr6M1w-0floNQ2z-f62zm0If3u"
 
-prev_classes_dir <- as_id(tlre_prev) # swap out as appropriate
+prev_classes_dir <- as_id(ltr_prev) # swap out as appropriate
 resp <- drive_mkdir(new_dir, prev_classes_dir)
 
 target_id <- resp$id
@@ -89,18 +89,11 @@ copy_that(d4, day_dirs[[4]][["id"]])
 d1 <- pull_id(main_ls, "Day 1") %>% make_ls()
 copy_that(d1, day_dirs[[1]][["id"]])
 
-
-
 d2 <- pull_id(main_ls, "Day 2") %>% make_ls()
 copy_that(d2, day_dirs[[2]][["id"]])
 
-# d3 <- pull_id(main_ls, "Part 3") %>% messy_ls("Solr")
-# copy_that(d3, day_dirs[[3]][["id"]])
-
 d3 <- pull_id(main_ls, "Day 3") %>% make_ls()
 copy_that(d3, day_dirs[[3]][["id"]])
-
-
 
 d4 <- pull_id(main_ls, "Day 4") %>% make_ls()
 copy_that(d4, day_dirs[[4]][["id"]])

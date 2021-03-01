@@ -7,6 +7,7 @@ source("params.R")
 gm_auth_configure()
 gm_auth(user) # require console interaction
 
+gs4_auth(user)
 roster <- read_sheet(sheet_url)
 # ^^^^ Run interactive for auth porpoises ^^^^ -----------------------------------------------
 
@@ -16,20 +17,20 @@ roster <- read_sheet(sheet_url)
 welcome_ltr <- glue::glue(
   "Hi {roster$first},
   <br><br>
-  Max and I are looking forward to learning about Learning to Rank with you tomorrow.
+  Max and I are looking forward to learning about Learning to Rank with you on Tuesday.
   <br><br>
   To make the class interactive, we've built a repo with lab exercises as Jupyter notebooks <a href='https://github.com/o19s/hello-ltr'>here.</a>
-  We know folks learn better when they can run and tinker with the examples.
-  Please come to class on Thursday with your lab environment ready to roll.
-  You should have recieved G-Cal and Slack invites. Reach out here or on Slack if you hit any issues.
+  Please try to set up the lab environment before coming to class. I highly recommend using the Docker option if available. Reach out via email if you hit any snags.
   <br><br>
-  See you very soon,
+  You will have recieved G-Cal (with Zoom details) and Slack (for in-class chat) invites shortly. 
+  <br><br>
+  See you soon,
   <br>
   {email_signature}
   "
 )
 
-welcome_book_body <- glue::glue(
+welcome_tlre <- glue::glue(
   "Hi {roster$first},
   <br><br>
   We are excited to have you join us for Think Like A Relevance Engineer (Elasticsearch) next week.
@@ -59,21 +60,20 @@ welcome_book_body <- glue::glue(
   "
 )
 
-
-follow_up_body <- glue::glue(
+follow_tlre <- glue::glue(
   "Hi {roster$first},
   <br>
   <br>
-  Thanks so much for coming to LTR training two(!) weeks ago, it was great learning with you.
+  Thanks so much for coming to TLRE training last month. Sorry it's taken me a while to send this, I hope you've already gotten your 'Relevant Search' book in the post.
   <br>
   <br>
   Attached is your certificate for completing the class! We use badgr.io to manage these, there is a link to the digital award on the certificate.  If you'd like to share it on LinkedIn, see the <a href='https://docs.google.com/document/d/1edUjY0kmVpD2J6cDYQIYPXBnwK-pnQ2I0Rb0chqj3hM/edit#heading=h.ny6kcqir2tgd'>instructions</a> here.
   <br>
   <br>
-  If you're comfortable sharing a quote/testimonial about your training experience, we'd really appreciate it! There is also an anonymous <a href = 'https://docs.google.com/forms/d/e/1FAIpQLScflsdF-0zC03Q9u2684P0cOWdvdZaRxqF03QRavoY9oij4eg/viewform'>survey</a> if you'd like to share any feedback that way.
+  If you can share a positive quote/testimonial about your training experience, I'll send you some socks and stickers as a bribe! There is also an anonymous <a href = 'https://docs.google.com/forms/d/e/1FAIpQLScflsdF-0zC03Q9u2684P0cOWdvdZaRxqF03QRavoY9oij4eg/viewform'>survey</a> if you'd like to share any feedback that way.
   <br>
   <br>
-  Please give us a shout if you have any questions.  Hope to see you on <a href='https://relevancy.slack.com'>Relevancy Slack</a> or maybe at another training or search conference.
+  Please give us a shout if you have any questions.  Hope to see you on <a href='https://relevancy.slack.com'>Relevancy Slack</a> and at an in-person search conference soon.
   <br>
   <br>
   Stay relevant,
@@ -82,20 +82,20 @@ follow_up_body <- glue::glue(
   "
 )
 
-follow_up_body_tlre <- glue::glue(
+follow_ltr <- glue::glue(
   "Hi {roster$first},
   <br>
   <br>
-  Thanks so much for coming to TLRE training last week, it was great learning with you.
+  Thanks so much for coming to LTR training last week, it was great learning with you.
   <br>
   <br>
-  Attached is your certificate for completing the class! We use badgr.io to manage these, there is a link to the digital award on the certificate.  If you'd like to share it on LinkedIn, see the <a href='https://docs.google.com/document/d/1edUjY0kmVpD2J6cDYQIYPXBnwK-pnQ2I0Rb0chqj3hM/edit#heading=h.ny6kcqir2tgd'>instructions</a> here.
+  Attached is your certificate for completing the class. We use badgr.io to manage these, there is a link to the digital award on the certificate.  If you'd like to share it on LinkedIn, see the <a href='https://docs.google.com/document/d/1edUjY0kmVpD2J6cDYQIYPXBnwK-pnQ2I0Rb0chqj3hM/edit#heading=h.ny6kcqir2tgd'>instructions</a> here.
   <br>
   <br>
-  If you're comfortable sharing a quote/testimonial about your training experience, we'd really appreciate it! There is also an anonymous <a href = 'https://docs.google.com/forms/d/e/1FAIpQLScflsdF-0zC03Q9u2684P0cOWdvdZaRxqF03QRavoY9oij4eg/viewform'>survey</a> if you'd like to share any feedback that way.
+  If you can share a positive quote/testimonial about your training experience, I'll send you socks and stickers as a bribe.
   <br>
   <br>
-  Please give us a shout if you have any questions.  Hope to see you on <a href='https://relevancy.slack.com'>Relevancy Slack</a> or maybe at another training or search conference.
+  Please give us a shout if you have any questions.  Hope to see you on <a href='https://relevancy.slack.com'>Relevancy Slack</a> or at a search conference soon.
   <br>
   <br>
   Stay relevant,
@@ -105,7 +105,9 @@ follow_up_body_tlre <- glue::glue(
 )
 
 # Set up ------------------------------------------------------------
-roster$body <- welcome_book_body # choose which one to use; has to be here b/c glue (or I could get tidy-eval-fancy)
+
+# choose which one to use; has to be here b/c glue (or I could get tidy-eval-fancy)
+roster$body <- follow_tlre
 
 #' Create Gmail to save as draft or send
 #' 
@@ -138,7 +140,7 @@ make_email <- function(roster, draft = TRUE, cert = FALSE) {
 
 sent <- roster %>%
   split(1:nrow(.)) %>%
-  map(~ make_email(.))
+  map(~ make_email(., T, T))
 # sometimes this hangs, but running on a fresh restart seems to resolve
 # so restart the R-session --> Re-auth --> Pray
 

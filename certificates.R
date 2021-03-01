@@ -5,17 +5,22 @@ library(tidyverse)
 
 source("params.R")
 
+gs4_auth("nday@opensourceconnections.com")
 roster <- read_sheet(sheet_url)
 
 # maybe need some touch ups
 roster %<>% mutate(name = paste(first, last))
 
-# !!! - change date & class_name in template
-# ppt <- read_pptx(template_path)
+## !!!
+## change date & class name in template.pptx before going further
+## !!!
 
+
+# Tweaks to library(officr) functions ---------------------------------------------
+
+# ppt <- read_pptx(template_path)
 # layout_properties(ppt)
 
-# Tweaks to officr functions ---------------------------------------------
 ph_with2 <- function (x, value, location, ...) {
   slide <- x$slide$get_slide(x$cursor)
   location <- fortify_location2(location, doc = x)
@@ -72,6 +77,8 @@ convert_to_pdf <- function(file, out_dir) {
 
 # Create ------------------------------------------------------------------
 
+# clear out existing certs
+dir(output_dir, full.names = T) %>% file.remove() 
 
 for(i in seq_along(roster$name)) {
   rn = roster$name[i]
@@ -91,6 +98,5 @@ dir(output_dir, "pptx", full.names = TRUE) %>% file.remove()
 
 roster$cert_path <- glue::glue("{output_dir}{gsub(' ', '_', roster$name)}.pdf")
 
-# write_csv(roster, "roster.csv") # for use in emails.R
 write_sheet(roster, sheet_url, 1)
 
