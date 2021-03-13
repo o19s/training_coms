@@ -1,13 +1,18 @@
-# "global" params
-sheet_url <- "https://docs.google.com/spreadsheets/d/1d5uWce0UbQCvRhbEJNxDAautHu7CWYd_iOXjVBLbPr4/edit#gid=0"
+## globals ----
 user <- "nday@opensourceconnections.com"
 password <- Sys.getenv("BADGER_PW") # function to request token in 'badgr.R'
 
+## certificates.R
 output_dir <- "certs_new/"
 template_path <- "template.pptx"
 
-# email params
-email_signature <- "Max and Nate"
-# email_subject = "Thanks for coming to training last week! Here is your certificate."
-email_subject = "TLRE Solr Certificate"
 
+## class specific ---
+sheet_url <- "https://docs.google.com/spreadsheets/d/1pCIVUVsPlp7vVeuXGkHZfBcWPvZibsyQWPYiiFifrKk"
+
+## emails.R
+email_signature <- "Eric, Max and Nate"
+
+# email_subject = "Thanks for coming to training last week! Here is your certificate."
+email_subject = "TLRE next week"
+email_body = "welcome_yext"
