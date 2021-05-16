@@ -2,7 +2,7 @@ library(magrittr)
 library(googledrive)
 library(tidyverse)
 
-drive_auth()
+drive_auth("nday@opensourceconnections.com")
 
 # Prep folder tree --------------------------------------------------------
 
@@ -10,16 +10,16 @@ drive_auth()
 tlre_main <- "1IkMsijn0jQGzJFl1qE9O1m2Wn0jYU-aZ"
 ltr_main <- "1Xk5bfDO1q-I_DBRIFR0TObF7OZNZYGRM"
 
-main_ls <- drive_ls(as_id(ltr_main)) # swap out as appropriate
+main_ls <- drive_ls(as_id(tlre_main)) # swap out as appropriate
 
 # Where the new files go
-new_dir <- "Hello_LTR_2020_02_16"
+new_dir <- "TLRE-ES-Shopify-2021"
 
 # Create a new class inside "Previous Classes" directory
 tlre_prev <- "1bbHpIBlaOZ1JAyBPv3geuyfC0rh9eYIu"
 ltr_prev <- "1aHnIMPbr6M1w-0floNQ2z-f62zm0If3u"
 
-prev_classes_dir <- as_id(ltr_prev) # swap out as appropriate
+prev_classes_dir <- as_id(tlre_prev) # swap out as appropriate
 resp <- drive_mkdir(new_dir, prev_classes_dir)
 
 target_id <- resp$id

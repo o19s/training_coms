@@ -1,5 +1,6 @@
 library(gmailr)
 library(googlesheets4)
+library(magrittr)
 library(tidyverse)
 
 source("params.R")
@@ -10,6 +11,12 @@ gm_auth(user) # may require console interaction
 gs4_auth(user)
 roster <- read_sheet(sheet_url)
 # ^^^^ Run interactive for auth porpoises ^^^^ -----------------------------------------------
+# 
+# roster %<>%
+#   mutate(email = gsub(".*<(.*)>", "\\1", name),
+#          name = gsub(" <.*", "", name)) %>% 
+#   separate(name, c("first", "last"))
+
 
 source("body_templates.R")
 

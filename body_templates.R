@@ -46,12 +46,15 @@ welcome_tlre <- glue::glue(
   "
 )
 
-welcome_yext <- glue::glue(
+welcome_tlre_no_book <- glue::glue(
   "Hi {roster$first},
   <br><br>
-  We are excited to have you join us for Think Like A Relevance Engineer next week.
+  We are excited to have you join us for Think Like A Relevance Engineer this week.
   <br><br>
   We will use Zoom for video conferencing and a private Slack channel for coms during class. G-Cal event (with Zoom details) and Slack channel invites will follow shortly.
+  <br><br>
+  To make the class interactive, we have a sandbox setup <a href='https://github.com/o19s/es-tmdb'>here</a>.
+  Please follow the instructions there to get set-up before we start class on the third day, Thursday.
   <br><br>
   Reach out with any questions,
   <br>
