@@ -66,13 +66,13 @@ follow_tlre <- glue::glue(
   "Hi {roster$first},
   <br>
   <br>
-  Thanks so much for coming to TLRE training last month. Sorry it's taken me a while to send this, I hope you've already gotten your 'Relevant Search' book in the post.
+  Thanks so much for coming to TLRE and learning with us. It was great learning with you.
   <br>
   <br>
   Attached is your certificate for completing the class! We use badgr.io to manage these, there is a link to the digital award on the certificate.  If you'd like to share it on LinkedIn, see the <a href='https://docs.google.com/document/d/1edUjY0kmVpD2J6cDYQIYPXBnwK-pnQ2I0Rb0chqj3hM/edit#heading=h.ny6kcqir2tgd'>instructions</a> here.
   <br>
   <br>
-  If you can share a positive quote/testimonial about your training experience, I'll send you some socks and stickers as a bribe! There is also an anonymous <a href = 'https://docs.google.com/forms/d/e/1FAIpQLScflsdF-0zC03Q9u2684P0cOWdvdZaRxqF03QRavoY9oij4eg/viewform'>survey</a> if you'd like to share any feedback that way.
+  If you can share a positive quote/testimonial about your training experience, let us know and we'll send you some socks and stickers as payment! There is also an anonymous <a href = 'https://docs.google.com/forms/d/e/1FAIpQLScflsdF-0zC03Q9u2684P0cOWdvdZaRxqF03QRavoY9oij4eg/viewform'>survey</a> for any other feedback.
   <br>
   <br>
   Please give us a shout if you have any questions.  Hope to see you on <a href='https://relevancy.slack.com'>Relevancy Slack</a> and at an in-person search conference soon.
