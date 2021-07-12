@@ -2,7 +2,9 @@ library(magrittr)
 library(googledrive)
 library(tidyverse)
 
-drive_auth("nday@opensourceconnections.com")
+source("params.R")
+
+drive_auth(user)
 
 # Prep folder tree --------------------------------------------------------
 
@@ -13,16 +15,19 @@ ltr_main <- "1Xk5bfDO1q-I_DBRIFR0TObF7OZNZYGRM"
 main_ls <- drive_ls(as_id(tlre_main)) # swap out as appropriate
 
 # Where the new files go
-new_dir <- "TLRE-ES-Shopify-2021"
+new_dir <- "TLRE-ES-Summer-2021"
 
 # Create a new class inside "Previous Classes" directory
 tlre_prev <- "1bbHpIBlaOZ1JAyBPv3geuyfC0rh9eYIu"
 ltr_prev <- "1aHnIMPbr6M1w-0floNQ2z-f62zm0If3u"
 
+# to create a new dir
 prev_classes_dir <- as_id(tlre_prev) # swap out as appropriate
 resp <- drive_mkdir(new_dir, prev_classes_dir)
-
 target_id <- resp$id
+# if the dir already exists
+target_id <- "1swP0vIcMTj29pBOLXGDffKPN5B05cxS9"
+
 drive_ls(as_id(target_id)) # visually confirming
 
 # create four folders/days; save ids for later
@@ -69,7 +74,7 @@ messy_ls <- function(x, engine = "Elasticsearch") {
 
 
 # * TLRE ------------------------------------------------------------------
-eng <- "Elasticsearch"
+eng <- "Elasticsearch" # swap as needed
 
 d1 <- pull_id(main_ls, "Part 1") %>% make_ls()
 copy_that(d1, day_dirs[[1]][["id"]])
@@ -84,7 +89,6 @@ d4 <- pull_id(main_ls, "Part 4") %>% messy_ls(eng)
 copy_that(d4, day_dirs[[4]][["id"]])
 
 # *Hello LTR ---------------------------------------------------------------
-
 
 d1 <- pull_id(main_ls, "Day 1") %>% make_ls()
 copy_that(d1, day_dirs[[1]][["id"]])
