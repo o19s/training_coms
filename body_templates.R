@@ -65,7 +65,7 @@ follow_tlre <- glue::glue(
   "Hi {roster$first},
   <br>
   <br>
-  Thanks for coming to TLRE this Spring and learning with us. Attached is your certificate for completing the class. We use badgr.io to manage these, there is a link to the digital award on the certificate.  If you'd like to share it on LinkedIn, see these <a href='https://docs.google.com/document/d/1edUjY0kmVpD2J6cDYQIYPXBnwK-pnQ2I0Rb0chqj3hM/edit#heading=h.ny6kcqir2tgd'>instructions</a> here.
+  Thanks for coming to TLRE last week and learning with me and Max. Attached is your certificate for completing the class. We use badgr.io to manage these, there is a link to the digital award on the certificate.  If you'd like to share it on LinkedIn, see these <a href='https://docs.google.com/document/d/1edUjY0kmVpD2J6cDYQIYPXBnwK-pnQ2I0Rb0chqj3hM/edit#heading=h.ny6kcqir2tgd'>instructions</a> here.
   <br>
   <br>
   There is an anonymous <a href = 'https://docs.google.com/forms/d/e/1FAIpQLScflsdF-0zC03Q9u2684P0cOWdvdZaRxqF03QRavoY9oij4eg/viewform'>survey</a> for any feedback you have about the class. Hope to see you on <a href='https://relevancy.slack.com'>Relevancy Slack</a> and at an in-person search conference soon.

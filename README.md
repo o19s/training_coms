@@ -1,16 +1,19 @@
 ## Training Communications
 
-All OSC trainings involve personalized communication, whether that's the welcome email or course certificate. This repo is a collection of R scripts to help automate some of that. It resolves around a `roster` file that has names and emails of attendees.
+All OSC training involve personalized communication, whether that's the welcome email or course certificate. This repo is a collection of R scripts to help automate some of that. It resolves around a `roster` file that has names and emails of attendees.
 
 The general flow is:
 
+--- before class
 1. Get class roster from EventBee/G-Drive
 2. Send welcome email with `emails.R`
+
+--- after class 
 3. Use `badgr.R` to issue certificates
 4. Generate certificates with `certificates.R`
 5. Send follow-up email and attach certificate with `emails.R`
 
-### roster
+### roster (a data frame)
 
 This is essentially the export report from Eventbee, but stored on G-Drive. It must include the columns `first`, `last` and `email` and will be updated by the scripts in this repo.
 
@@ -25,7 +28,7 @@ Send a personalized template ("Welcome" or "Follow-up") to all attendees at once
 Requires:
 
 * Hand formatting the email body using HTML
-* Class roster with columns `email`, `first` and `book_code`(TLRE only)
+* Class roster with columns `email`, `first` and `last`
 * Ability to authenticate your OSC G-Mail account via browser (so no remote machines)
 
 ### badgr.R

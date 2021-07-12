@@ -1,16 +1,16 @@
 library(googlesheets4)
 library(officer)
-library(magrittr)
 library(tidyverse)
 
 source("functions.R")
 source("params.R")
 
+# get the roster from G-Drive
 gs4_auth(user)
 roster <- read_sheet(sheet_url)
 
 # maybe the roster needs `name` or some touch ups
-roster %<>% mutate(name = paste(first, last))
+roster <- roster %>% mutate(name = paste(first, last))
 
 ## !!!
 ## change date & class name in template.pptx before going further

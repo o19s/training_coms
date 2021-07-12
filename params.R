@@ -15,4 +15,4 @@ email_signature <- "Max & Nate"
 
 # email_subject = "Thanks for coming to training last week! Here is your certificate."
 email_subject = "TLRE (Elasticsearch) next week"
-email_body = "welcome_tlre_no_book"
+email_body = "follow_tlre"

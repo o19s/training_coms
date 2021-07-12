@@ -22,14 +22,14 @@ source("body_templates.R")
 
 # Set up ------------------------------------------------------------
 
-# choose which one to use; has to be here b/c glue (or I could get tidy-eval-fancy)
+# choose which template to use; has to be here b/c glue (or I could get tidy-eval-fancy)
 roster$body <- eval(parse(text = email_body))
 
 # Send it -----------------------------------------------------------------
 
 sent <- roster %>%
   split(1:nrow(.)) %>%
-  map(~ make_email(., draft = F, cert = F))
+  map(~ make_email(., draft = F, cert = T))
 # sometimes this hangs, but running on a fresh restart seems to resolve
 # so restart the R-session --> Re-auth --> Pray
 

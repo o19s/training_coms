@@ -1,5 +1,4 @@
 library(googlesheets4)
-library(magrittr)
 library(httr)
 library(tidyverse)
 
@@ -10,10 +9,12 @@ source("params.R")
 # Auth and setup ----------------------------------------------------------
 # manual adjustment req'd
 
+# get the roster
 gs4_auth(user)
-roster <- read_sheet(sheet_url) # interactive in console
+roster <- read_sheet(sheet_url)
 roster
 
+# ping the BadgrAPI
 resp <- badgr_auth(user, password)
 token <- content(resp)$access_token
 
@@ -29,7 +30,7 @@ class_of_interest
 # Award and record --------------------------------------------------------
 # This is where the magic happens
 
-roster %<>% 
+roster <- roster %>% 
   rowwise() %>% 
   mutate(badger_id = unname(award_badge(email, class_of_interest)))
 
