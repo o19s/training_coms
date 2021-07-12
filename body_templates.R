@@ -49,14 +49,13 @@ welcome_tlre <- glue::glue(
 welcome_tlre_no_book <- glue::glue(
   "Hi {roster$first},
   <br><br>
-  We are excited to have you join us for Think Like A Relevance Engineer this week.
+  We are excited to have you join us for Think Like A Relevance Engineer next week. Class will run 9a-1p EST with office half-hour following. All sessions will be recorded, to make it easy to catch up if you have to step out for life or your day job.
   <br><br>
   We will use Zoom for video conferencing and a private Slack channel for coms during class. G-Cal event (with Zoom details) and Slack channel invites will follow shortly.
   <br><br>
-  To make the class interactive, we have a sandbox setup <a href='https://github.com/o19s/es-tmdb'>here</a>.
-  Please follow the instructions there to get set-up before we start class on the third day, Thursday.
+  To make the class interactive, we will have a sandbox environment. If you have Docker on your personal computer, you are good to go. If you don't ping me, and I will set up a remote machine for you to use during class. Docker on your local is better because you can keep playing in the sandbox after class, relevance recess never ends.
   <br><br>
-  Reach out with any questions,
+  Reach out with any questions (email or slack),
   <br>
   {email_signature}
   "
@@ -66,16 +65,10 @@ follow_tlre <- glue::glue(
   "Hi {roster$first},
   <br>
   <br>
-  Thanks so much for coming to TLRE and learning with us. It was great learning with you.
+  Thanks for coming to TLRE this Spring and learning with us. Attached is your certificate for completing the class. We use badgr.io to manage these, there is a link to the digital award on the certificate.  If you'd like to share it on LinkedIn, see these <a href='https://docs.google.com/document/d/1edUjY0kmVpD2J6cDYQIYPXBnwK-pnQ2I0Rb0chqj3hM/edit#heading=h.ny6kcqir2tgd'>instructions</a> here.
   <br>
   <br>
-  Attached is your certificate for completing the class! We use badgr.io to manage these, there is a link to the digital award on the certificate.  If you'd like to share it on LinkedIn, see the <a href='https://docs.google.com/document/d/1edUjY0kmVpD2J6cDYQIYPXBnwK-pnQ2I0Rb0chqj3hM/edit#heading=h.ny6kcqir2tgd'>instructions</a> here.
-  <br>
-  <br>
-  If you can share a positive quote/testimonial about your training experience, let us know and we'll send you some socks and stickers as payment! There is also an anonymous <a href = 'https://docs.google.com/forms/d/e/1FAIpQLScflsdF-0zC03Q9u2684P0cOWdvdZaRxqF03QRavoY9oij4eg/viewform'>survey</a> for any other feedback.
-  <br>
-  <br>
-  Please give us a shout if you have any questions.  Hope to see you on <a href='https://relevancy.slack.com'>Relevancy Slack</a> and at an in-person search conference soon.
+  There is an anonymous <a href = 'https://docs.google.com/forms/d/e/1FAIpQLScflsdF-0zC03Q9u2684P0cOWdvdZaRxqF03QRavoY9oij4eg/viewform'>survey</a> for any feedback you have about the class. Hope to see you on <a href='https://relevancy.slack.com'>Relevancy Slack</a> and at an in-person search conference soon.
   <br>
   <br>
   Stay relevant,
@@ -88,16 +81,13 @@ follow_ltr <- glue::glue(
   "Hi {roster$first},
   <br>
   <br>
-  Thanks so much for coming to LTR training last week, it was great learning with you.
+  Thanks for coming to LTR training this Spring, it was great learning with you.
   <br>
   <br>
   Attached is your certificate for completing the class. We use badgr.io to manage these, there is a link to the digital award on the certificate.  If you'd like to share it on LinkedIn, see the <a href='https://docs.google.com/document/d/1edUjY0kmVpD2J6cDYQIYPXBnwK-pnQ2I0Rb0chqj3hM/edit#heading=h.ny6kcqir2tgd'>instructions</a> here.
   <br>
   <br>
-  If you can share a positive quote/testimonial about your training experience, I'll send you socks and stickers as a bribe.
-  <br>
-  <br>
-  Please give us a shout if you have any questions.  Hope to see you on <a href='https://relevancy.slack.com'>Relevancy Slack</a> or at a search conference soon.
+  There is an anonymous <a href = 'https://docs.google.com/forms/d/e/1FAIpQLScflsdF-0zC03Q9u2684P0cOWdvdZaRxqF03QRavoY9oij4eg/viewform'>survey</a> for any feedback you have about the class. Hope to see you on <a href='https://relevancy.slack.com'>Relevancy Slack</a> and at an in-person search conference soon.
   <br>
   <br>
   Stay relevant,

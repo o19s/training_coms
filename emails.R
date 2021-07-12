@@ -12,15 +12,13 @@ gm_auth(user) # may require console interaction
 gs4_auth(user)
 roster <- read_sheet(sheet_url)
 # ^^^^ Run interactive for auth porpoises ^^^^ -----------------------------------------------
+source("body_templates.R")
 
 # This is one time clean-uppy code for awk rosters, maybe you need it maybe you don't....
 # roster %<>%
 #   mutate(email = gsub(".*<(.*)>", "\\1", name),
 #          name = gsub(" <.*", "", name)) %>% 
 #   separate(name, c("first", "last"))
-
-
-source("body_templates.R")
 
 # Set up ------------------------------------------------------------
 
@@ -31,7 +29,7 @@ roster$body <- eval(parse(text = email_body))
 
 sent <- roster %>%
   split(1:nrow(.)) %>%
-  map(~ make_email(., draft = F, cert = T))
+  map(~ make_email(., draft = F, cert = F))
 # sometimes this hangs, but running on a fresh restart seems to resolve
 # so restart the R-session --> Re-auth --> Pray
 
